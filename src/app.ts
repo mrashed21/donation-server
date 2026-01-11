@@ -1,6 +1,7 @@
 import cors from "cors";
 import express, { Application } from "express";
 import { authRouter } from "./modules/auth/auth.route";
+import router from "./routes/router";
 const app: Application = express();
 
 app.use(
@@ -16,7 +17,7 @@ app.get("/", (req, res) => {
 });
 
 // 👇 IMPORTANT
-// app.use("/api/v1", router);
+app.use("/api/v1", router);
 
 app.use("/api/auth", authRouter);
 
