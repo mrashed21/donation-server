@@ -2,9 +2,9 @@ import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express, { Application } from "express";
 import { auth } from "./lib/auth";
+import errorHandler from "./middleware/errorHandler";
 import notFound from "./middleware/notFound";
 import router from "./routes/router";
-import errorHandler from "./middleware/errorHandler";
 const app: Application = express();
 
 app.use(
