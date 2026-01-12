@@ -22,7 +22,7 @@ export const auth = betterAuth({
         defaultValue: "active",
         required: false,
       },
-      bloodGroup: {
+      blood_group: {
         type: "string",
         required: true,
       },
@@ -34,15 +34,15 @@ export const auth = betterAuth({
         type: "string",
         required: true,
       },
-      lastDonateDate: {
+      last_donate_date: {
         type: "date",
         required: false,
       },
-      isAvailable: {
+      is_available: {
         type: "boolean",
         required: true,
       },
-      isBlocked: {
+      is_blocked: {
         type: "boolean",
         required: false,
       },
