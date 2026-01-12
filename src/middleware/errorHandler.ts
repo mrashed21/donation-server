@@ -1,5 +1,5 @@
-import { Prisma } from "@generated/prisma/client";
 import { NextFunction, Request, Response } from "express";
+import mongoose from "mongoose";
 
 const errorHandler = (
   err: any,
@@ -11,22 +11,40 @@ const errorHandler = (
   let errorMessage = "Something went wrong";
   let errorDetails: any = null;
 
-  // Prisma validation error
-  if (err instanceof Prisma.PrismaClientValidationError) {
+  /**
+   * Mongoose Validation Error
+   * Example: required field missing, min/max length, enum mismatch
+   */
+  if (err instanceof mongoose.Error.ValidationError) {
     statusCode = 400;
-    errorMessage = "Invalid data provided";
-    errorDetails = err.message;
-  }
+    errorMessage = "Validation failed";
+    errorDetails = Object.values(err.errors).map((e: any) => e.message);
+  } else if (err instanceof mongoose.Error.CastError) {
 
-  // Prisma known errors (unique, foreign key, etc.)
-  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+  /**
+   * Mongoose Cast Error
+   * Example: invalid ObjectId
+   */
     statusCode = 400;
+    errorMessage = "Invalid ID format";
+    errorDetails = `Invalid value for ${err.path}`;
+  } else if (err.code === 11000) {
+
+  /**
+   * MongoDB Duplicate Key Error
+   * Example: unique email / username conflict
+   */
+    statusCode = 409;
+    errorMessage = "Duplicate field value";
+    errorDetails = Object.keys(err.keyValue).map(
+      (key) => `${key} already exists`
+    );
+  } else if (err instanceof Error) {
+
+  /**
+   * Custom Application Error (throw new Error())
+   */
     errorMessage = err.message;
-    errorDetails = err.meta;
-  }
-
-  // Default JS error
-  if (err instanceof Error) {
     errorDetails = err.message;
   }
 
@@ -34,6 +52,7 @@ const errorHandler = (
     success: false,
     message: errorMessage,
     error: errorDetails,
+    // stack: process.env.NODE_ENV === "development" ? err.stack : undefined
   });
 };
 

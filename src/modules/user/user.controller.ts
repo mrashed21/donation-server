@@ -1,23 +1,29 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { userService } from "./user.service";
 
 // create user
 
-const createProfile = async (req: Request, res: Response) => {
-  const user = req.user;
-  const { user_type } = req.body;
+const createProfile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = req.user;
+    const { user_type } = req.body;
+    const result = await userService.createProfile(user?.id!, user_type);
 
-  console.log("user", user);
-  console.log("user_type", user_type);
-  const profile = await userService.createProfile(user?.id!, user_type);
-
-  res.status(201).json({
-    success: true,
-    data: profile,
-  });
+    res.status(201).json({
+      success: true,
+      message: "User Created Successfull",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 // get all user
-const getAllUsers = async (req: Request, res: Response) => {
+const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await userService.getAllUsers();
     res.status(200).json({
@@ -26,25 +32,29 @@ const getAllUsers = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong",
-      error: error,
-    });
+    next(error);
   }
 };
 
 // update user
 
-const updateProfile = async (req: Request, res: Response) => {
-  const user = req.user;
+const updateProfile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = req.user;
+    const updatedProfile = await userService.updateProfile(user?.id!, req.body);
 
-  const updatedProfile = await userService.updateProfile(user?.id!, req.body);
-
-  res.status(200).json({
-    success: true,
-    data: updatedProfile,
-  });
+    res.status(200).json({
+      success: true,
+      message: "Profile update successfull",
+      data: updatedProfile,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const userController = {
