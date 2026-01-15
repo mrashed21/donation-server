@@ -1,6 +1,6 @@
 import { db } from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
 import { UserProfile } from "./user.model";
-
 // create user
 
 const createProfile = async (
@@ -20,6 +20,12 @@ const getAllUsers = async () => {
   return result;
 };
 
+// get me
+const getMe = async (id: string) => {
+  return await db.collection("user").findOne({
+    _id: new ObjectId(id),
+  });
+};
 // update user
 
 const updateProfile = async (userId: string, payload: any) => {
@@ -85,4 +91,4 @@ const updateProfile = async (userId: string, payload: any) => {
   return result;
 };
 
-export const userService = { createProfile, getAllUsers, updateProfile };
+export const userService = { createProfile, getAllUsers, getMe, updateProfile };

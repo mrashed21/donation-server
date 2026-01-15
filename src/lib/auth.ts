@@ -38,6 +38,10 @@ export const auth = betterAuth({
         type: "boolean",
         defaultValue: false,
       },
+      profile_completed: {
+        type: "boolean",
+        defaultValue: false,
+      },
     },
   },
 

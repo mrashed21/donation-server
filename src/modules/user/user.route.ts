@@ -7,8 +7,14 @@ const router = express.Router();
 // get all user
 router.use(
   "/all-user",
-  authMiddleWare(UserRole.user),
+  authMiddleWare(UserRole.admin),
   userController.getAllUsers
+);
+// get me
+router.use(
+  "/get-me",
+  authMiddleWare(UserRole.admin, UserRole.user),
+  userController.getMe
 );
 // create user
 router.post(
