@@ -13,6 +13,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 export const auth = betterAuth({
+  baseURL: process.env.BETTER_AUTH_URL!,
   database: mongodbAdapter(db),
   trustedOrigins: [process.env.APP_URL!],
   experimental: { joins: true },
