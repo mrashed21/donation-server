@@ -4,6 +4,7 @@ export interface IUserProfile {
   user_id: Types.ObjectId;
   user_type: "donor" | "requester";
   profile_completed: boolean;
+  phone_number: string;
   date_of_birth: Date;
   age: number;
   gender: "male" | "female";
@@ -21,6 +22,6 @@ export interface IUserProfile {
   whatsapp_number?: string;
   facebook_link?: string;
 
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }

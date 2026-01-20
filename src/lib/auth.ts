@@ -25,22 +25,19 @@ export const auth = betterAuth({
         defaultValue: "user",
       },
 
-      phone: {
+      user_type: {
         type: "string",
         required: false,
+        defaultValue: "requester",
       },
 
       status: {
         type: "string",
         defaultValue: "active",
       },
-
-      is_blocked: {
-        type: "boolean",
-        defaultValue: false,
-      },
       profile_completed: {
         type: "boolean",
+        required: false,
         defaultValue: false,
       },
     },

@@ -24,6 +24,11 @@ const userProfileSchema = new Schema<IUserProfile>(
       type: Date,
       required: true,
     },
+    phone_number: {
+      type: String,
+      required: true,
+      unique: true,
+    },
 
     age: {
       type: Number,
@@ -85,9 +90,6 @@ const userProfileSchema = new Schema<IUserProfile>(
     whatsapp_number: String,
     facebook_link: String,
   },
-  { collection: "user_profiles", timestamps: true }
+  { collection: "user", timestamps: true },
 );
-export const UserProfile = model<IUserProfile>(
-  "UserProfile",
-  userProfileSchema
-);
+export const user = model<IUserProfile>("user", userProfileSchema);

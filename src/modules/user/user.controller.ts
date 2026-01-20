@@ -6,17 +6,16 @@ import { userService } from "./user.service";
 const createProfile = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const user = req.user;
-    const { user_type } = req.body;
-    const result = await userService.createProfile(user?.id!, user_type);
+    const updatedProfile = await userService.createProfile(user?.id!, req.body);
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
-      message: "User Created Successfull",
-      data: result,
+      message: "Profile update successfull",
+      data: updatedProfile,
     });
   } catch (error) {
     next(error);
@@ -65,7 +64,7 @@ const getMe = async (req: Request, res: Response, next: NextFunction) => {
 const updateProfile = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const user = req.user;

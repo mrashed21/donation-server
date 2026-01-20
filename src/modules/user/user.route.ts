@@ -16,12 +16,13 @@ router.use(
   authMiddleWare(UserRole.admin, UserRole.user),
   userController.getMe
 );
-// create user
-router.post(
-  "/profile",
-  authMiddleWare(UserRole.admin, UserRole.user),
-  userController.createProfile
-);
+
+// // create user
+// router.post(
+//   "/profile",
+//   authMiddleWare(UserRole.admin, UserRole.user),
+//   userController.createProfile
+// );
 
 // update user
 router.patch(

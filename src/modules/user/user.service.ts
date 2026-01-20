@@ -1,13 +1,13 @@
 import { db } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
-import { UserProfile } from "./user.model";
+import { user } from "./user.model";
 // create user
 
 const createProfile = async (
   userId: string,
-  userType: "donor" | "requester"
+  userType: "donor" | "requester",
 ) => {
-  const result = await UserProfile.create({
+  const result = await user.create({
     user_id: userId,
     user_type: userType,
   });
@@ -42,46 +42,29 @@ const updateProfile = async (userId: string, payload: any) => {
     takes_drugs,
   } = payload;
 
-  if (!date_of_birth) {
-    throw new Error("Date of Birth is required!");
+  if (!date_of_birth) throw new Error("Date of Birth is required!");
+  if (!age) throw new Error("Age is required!");
+  if (!gender) throw new Error("Gender is required!");
+  if (!weight) throw new Error("Weight is required!");
+  if (!blood_group) throw new Error("Blood Group is required!");
+  if (!division) throw new Error("Division is required!");
+  if (!district) throw new Error("District is required!");
+
+  // ✅ boolean validation (FIX)
+  if (typeof has_disease !== "boolean") {
+    throw new Error("Has Disease is required!");
   }
-  if (!age) {
-    throw new Error("Age is required!");
-  }
-  if (!gender) {
-    throw new Error("Gender is required!");
-  }
-  if (!weight) {
-    throw new Error(" Weight is required!");
-  }
-  if (!blood_group) {
-    throw new Error(" Blood Group is required!");
-  }
-  if (!division) {
-    throw new Error("Division is required!");
-  }
-  if (!district) {
-    throw new Error("District is required!");
-  }
-  if (!has_disease) {
-    throw new Error("Has Diseas is required!");
-  }
-  if (!smokes) {
+  if (typeof smokes !== "boolean") {
     throw new Error("Smokes is required!");
   }
-  if (!takes_drugs) {
+  if (typeof takes_drugs !== "boolean") {
     throw new Error("Takes Drugs is required!");
   }
 
-  const result = await UserProfile.findOneAndUpdate(
-    { user_id: userId },
-    {
-      $set: payload,
-    },
-    {
-      new: true,
-      runValidators: false,
-    }
+  const result = await user.findOneAndUpdate(
+    { _id: userId },
+    { $set: payload },
+    { new: true },
   );
 
   if (!result) {
