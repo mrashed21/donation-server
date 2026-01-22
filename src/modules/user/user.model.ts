@@ -60,6 +60,10 @@ const userProfileSchema = new Schema<IUserProfile>(
       type: String,
       required: true,
     },
+    area: {
+      type: String,
+      required: true,
+    },
 
     has_disease: {
       type: Boolean,

@@ -26,6 +26,8 @@ const getMe = async (id: string) => {
     _id: new ObjectId(id),
   });
 };
+
+
 // update user
 
 const updateProfile = async (userId: string, payload: any) => {
@@ -50,7 +52,7 @@ const updateProfile = async (userId: string, payload: any) => {
   if (!division) throw new Error("Division is required!");
   if (!district) throw new Error("District is required!");
 
-  // ✅ boolean validation (FIX)
+  //  boolean validation (FIX)
   if (typeof has_disease !== "boolean") {
     throw new Error("Has Disease is required!");
   }
