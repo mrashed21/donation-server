@@ -1,49 +1,57 @@
 import { Types } from "mongoose";
 
+export type UserType = "donor" | "requester";
+export type Gender = "male" | "female";
+export type BloodGroup =
+  | "A+"
+  | "A-"
+  | "B+"
+  | "B-"
+  | "AB+"
+  | "AB-"
+  | "O+"
+  | "O-";
+
 export interface IUserProfile {
-  user_id: Types.ObjectId;
-  user_type: "donor" | "requester";
-  profile_completed: boolean;
+  _id: Types.ObjectId;
+
+  user_type: UserType;
+
   phone_number: string;
+  whatsapp_number?: string;
+  whatsapp_number_show?: boolean;
+
+  facebook_link?: string;
+  facebook_link_show?: boolean;
+
   date_of_birth: Date;
-  age: number;
-  gender: "male" | "female";
+  age_show?: boolean;
+
+  gender: Gender;
+  gender_show?: boolean;
+
   weight: number;
-  blood_group: string;
+  weight_show?: boolean;
+
+  blood_group: BloodGroup;
+
   division: string;
   district: string;
   area: string;
+
   has_disease: boolean;
   disease_details?: string;
+
   smokes: boolean;
   takes_drugs: boolean;
+
   last_donate_date?: Date;
   availability_locked_until?: Date;
+
   is_available: boolean;
-  whatsapp_number?: string;
-  facebook_link?: string;
 
-  createdAt?: string;
-  updatedAt?: string;
+  profile_completed: boolean;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }
-
-/*
-user_type: "donor" | "requester";
-  profile_completed: true;
-  phone_number: string;
-  date_of_birth: Date;
-  gender: "male" | "female";
-  weight: number;
-  blood_group: string;
-  division: string;
-  district: string;
-  area:string
-  has_disease: boolean;
-  disease_details?: string;
-  smokes: boolean;
-  takes_drugs: boolean;
-  last_donate_date?: Date;
-  is_available: boolean; (last_donate_date + 120 days === today then can select yes and value true ,)
-  whatsapp_number?: string;
-  facebook_link?: string;
-*/

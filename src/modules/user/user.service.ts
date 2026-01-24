@@ -33,7 +33,6 @@ const getMe = async (id: string) => {
 const updateProfile = async (userId: string, payload: any) => {
   const {
     date_of_birth,
-    age,
     gender,
     weight,
     blood_group,
@@ -45,7 +44,7 @@ const updateProfile = async (userId: string, payload: any) => {
   } = payload;
 
   if (!date_of_birth) throw new Error("Date of Birth is required!");
-  if (!age) throw new Error("Age is required!");
+  // if (!age) throw new Error("Age is required!");
   if (!gender) throw new Error("Gender is required!");
   if (!weight) throw new Error("Weight is required!");
   if (!blood_group) throw new Error("Blood Group is required!");
