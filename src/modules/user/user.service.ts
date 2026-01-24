@@ -8,7 +8,7 @@ const createProfile = async (
   userType: "donor" | "requester",
 ) => {
   const result = await user.create({
-    user_id: userId,
+    _id: userId,
     user_type: userType,
   });
 
@@ -26,7 +26,6 @@ const getMe = async (id: string) => {
     _id: new ObjectId(id),
   });
 };
-
 
 // update user
 
